@@ -859,13 +859,16 @@ class EUserv:
                     if len(server_id_cells) != 1:
                         continue
                     
-                    # 修复2: 取所有 td-z1-sp2-kc，用索引 [2] 拿 Actions 列
-                    action_cells = tr.select('.td-z1-sp2-kc')
-                    if len(action_cells) < 3:
-                        continue
-                    
-                    # Actions 列是第 3 个（索引 2）
-                    action_text = action_cells[2].get_text(strip=True)
+                    # 修复: 优先查找嵌套的 action_container，不依赖列数索引
+                    action_container = tr.select_one('.td-z1-sp2-kc .kc2_order_action_container')
+                    if action_container:
+                        action_text = action_container.get_text(strip=True)
+                    else:
+                        # 兜底：取最后一个 td-z1-sp2-kc 单元格内容
+                        action_cells = tr.select('.td-z1-sp2-kc')
+                        if not action_cells:
+                            continue
+                        action_text = action_cells[-1].get_text(strip=True)
                     logger.debug(f"续期信息: {action_text}")
 
                     can_renew = True
