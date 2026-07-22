@@ -319,7 +319,7 @@ def recognize_and_calculate(captcha_image_url: str, session: requests.Session) -
                 return result
         
         # 策略3：激进纠正 - 强制把所有非数字转为数字，再尝试解析
-        logger.warning(f"常规解析失败，尝试激进纠正...")
+        logger.warning("常规解析失败，尝试激进纠正...")
         aggressive_text = aggressive_digit_convert(raw_text)
         logger.debug(f"激进纠正结果: {raw_text} → {aggressive_text}")
         
@@ -519,7 +519,7 @@ class EUserv:
                         domain=c.get('domain', 'support.euserv.com'),
                         path=c.get('path', '/'),
                     )
-            logger.info(f"🍪 已加载信任设备 Cookie，登录时将跳过 PIN 验证")
+            logger.info("🍪 已加载信任设备 Cookie，登录时将跳过 PIN 验证")
         except Exception as e:
             logger.warning(f"⚠️ 加载 Cookie 失败: {e}")
 
@@ -948,7 +948,7 @@ class EUserv:
             )
             
             if not pin:
-                logger.error(f"❌ 获取续期 PIN 码失败")
+                logger.error("❌ 获取续期 PIN 码失败")
                 return False
         
             # 步骤4: 验证 PIN 获取 token
